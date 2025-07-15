@@ -1,0 +1,13 @@
+pandas
+numpy
+scikit-learn
+scipy
+websocket-client
+requests
+python-dotenv
+fastapi
+uvicorn
+matplotlib
+mplfinance
+protobuf
+aiohttp
