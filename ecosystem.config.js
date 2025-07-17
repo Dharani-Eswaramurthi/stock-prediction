@@ -1,14 +1,21 @@
 module.exports = {
   apps: [
     {
-      name: "backend",
-      script: "uvicorn mcp_server:app --host 0.0.0.0 --port 8000",
-      interpreter: "python3"
+      name: 'frontend',
+      cwd: './',
+      script: './.venv/bin/streamlit',
+      args: 'run ui_new.py',
+      interpreter: '/home/ec2-user/stock-prediction/stock-env/bin/python3',
+      watch: false,
     },
     {
-      name: "frontend",
-      script: "streamlit run ui_new.py",
-      interpreter: "python3",
+      name: 'backend',
+      cwd: './',
+      script: './.venv/bin/uvicorn',
+      args: 'mcp_server:app',
+      interpreter: '/home/ec2-user/stock-prediction/stock-env/bin/python3',
+      watch: false,
     }
   ]
-}
+};
+
