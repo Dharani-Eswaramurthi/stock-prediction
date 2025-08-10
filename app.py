@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BACKEND_URL = os.getenv("BACKEND_URL", "http://51.20.120.226:8000")
+BACKEND_URL = os.getenv("BACKEND_URL", "https://51.20.120.226:8000")
 
 st.set_page_config(page_title="Stock Predictor • Upstox + OpenAI", layout="wide")
 
