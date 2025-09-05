@@ -1,9 +1,12 @@
 import websocket
 import json
 import urllib
+from dotenv import load_dotenv
+load_dotenv()
+import os
 
 # Replace these with your actual values
-BACKEND_URL = "http://localhost:8000"  # your FastAPI backend
+BACKEND_URL = os.getenv("BACKEND_URL")
 INSTRUMENT_KEY = "BSE_EQ|INE155A01022"
 ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiIzVUMzWFAiLCJqdGkiOiI2OGFmZmQ1ZjI0NDY4MzViOTU3NzViOWUiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaXNQbHVzUGxhbiI6ZmFsc2UsImlhdCI6MTc1NjM2NDEyNywiaXNzIjoidWRhcGktZ2F0ZXdheS1zZXJ2aWNlIiwiZXhwIjoxNzU2NDE4NDAwfQ.RJxlOFVG2QETZkLOdh4dOkLB5XlkQRIyqSL_cCUhESI"
 
