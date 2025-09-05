@@ -247,7 +247,7 @@ def get_historical_candles(
         df["time"] = pd.to_datetime(df["time"])  # keep tz
         df.sort_values("time", inplace=True)
         df.reset_index(drop=True, inplace=True)
-    return df
+    return df 
 
 
 class _WSRunner:
