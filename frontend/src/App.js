@@ -558,7 +558,7 @@ const TradingDashboard = () => {
         </div>
 
         {/* Trade Plan */}
-        <div className="grid grid-cols-3 gap-3 mb-4 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-sm">
           <div className={`${signal === 'BUY' ? 'bg-green-500/10' : signal === 'SELL' ? 'bg-red-500/10' : 'bg-gray-500/10'} rounded-lg p-3 border border-white/10`}>
             <div className="text-gray-500">Entry</div>
             <div className="font-semibold">₹{(entry_price ?? 0).toFixed(2)}</div>
@@ -572,7 +572,7 @@ const TradingDashboard = () => {
             <div className="font-semibold">₹{(take_profit ?? 0).toFixed(2)}{take_profit_distance_pct != null ? ` (${take_profit_distance_pct.toFixed(2)}%)` : ''}</div>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-3 mb-4 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-sm">
           <div className="rounded-lg p-3 border border-white/10">
             <div className="text-gray-500">Risk/Reward</div>
             <div className="font-semibold">{risk_reward != null ? risk_reward.toFixed(2) : '—'}</div>
@@ -615,7 +615,7 @@ const TradingDashboard = () => {
         <div className="text-sm">
           <div className="text-gray-500 mb-1">Key Numbers</div>
           {metrics?.length ? (
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {metrics.map((m, idx) => (
                 <div key={idx} className="flex justify-between">
                   <span className="capitalize">{m.name}:</span>
@@ -624,7 +624,7 @@ const TradingDashboard = () => {
               ))}
             </div>
           ) : indicators ? (
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {Object.entries(indicators).map(([key, value]) => (
                 <div key={key} className="flex justify-between">
                   <span className="capitalize">{key}:</span>
@@ -826,40 +826,46 @@ const TradingDashboard = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-6 gap-6">
-                    <div className="col-span-2">
-                      <div className="text-4xl font-bold mb-2">
+                  <div className="grid grid-cols-6 gap-4">
+                    {/* Price + Change tile */}
+                    <div className="col-span-6 sm:col-span-3 lg:col-span-2 p-4 rounded-xl border shadow-sm ${darkMode ? 'bg-slate-800/40 border-slate-700' : 'bg-white border-gray-200'}">
+                      <div className="text-xs uppercase tracking-wide opacity-70 mb-1">Last Price</div>
+                      <div className="text-3xl font-extrabold mb-2">
                         {currentPrice ? formatPrice(currentPrice.ltp) : formatPrice(historicalData[historicalData.length - 1]?.close || 0)}
                       </div>
-                      <div className={`flex items-center gap-2 text-lg ${
+                      <div className={`flex items-center gap-2 text-sm ${
                         (currentPrice?.change || marketStats.change) >= 0 ? 'text-green-500' : 'text-red-500'
                       }`}>
-                        {(currentPrice?.change || marketStats.change) >= 0 ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+                        {(currentPrice?.change || marketStats.change) >= 0 ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                         <span className="font-semibold">
-                          {formatPrice(Math.abs(currentPrice?.change || marketStats.change))} 
-                          ({(currentPrice?.changePercent || marketStats.changePercent).toFixed(2)}%)
+                          {formatPrice(Math.abs(currentPrice?.change || marketStats.change))}
                         </span>
-                        {isStreaming && <span className="text-xs bg-amber-500 text-white px-2 py-1 rounded-full animate-pulse">LIVE</span>}
+                        <span className="font-semibold">({(currentPrice?.changePercent || marketStats.changePercent).toFixed(2)}%)</span>
+                        {isStreaming && <span className="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded-full animate-pulse">LIVE</span>}
                       </div>
                     </div>
-                    
-                    <div className="space-y-1">
-                      <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Day High</div>
+
+                    {/* Day High */}
+                    <div className={`col-span-3 sm:col-span-1 p-4 rounded-xl border shadow-sm ${darkMode ? 'bg-slate-800/40 border-slate-700' : 'bg-white border-gray-200'}`}>
+                      <div className={`text-xs uppercase tracking-wide ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Day High</div>
                       <div className="font-bold text-green-500 text-xl">{formatPrice(marketStats.high)}</div>
                     </div>
-                    
-                    <div className="space-y-1">
-                      <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Day Low</div>
+
+                    {/* Day Low */}
+                    <div className={`col-span-3 sm:col-span-1 p-4 rounded-xl border shadow-sm ${darkMode ? 'bg-slate-800/40 border-slate-700' : 'bg-white border-gray-200'}`}>
+                      <div className={`text-xs uppercase tracking-wide ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Day Low</div>
                       <div className="font-bold text-red-500 text-xl">{formatPrice(marketStats.low)}</div>
                     </div>
-                    
-                    <div className="space-y-1">
-                      <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Open</div>
+
+                    {/* Open */}
+                    <div className={`col-span-3 sm:col-span-1 p-4 rounded-xl border shadow-sm ${darkMode ? 'bg-slate-800/40 border-slate-700' : 'bg-white border-gray-200'}`}>
+                      <div className={`text-xs uppercase tracking-wide ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Open</div>
                       <div className="font-bold text-xl">{formatPrice(marketStats.open)}</div>
                     </div>
-                    
-                    <div className="space-y-1">
-                      <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Volume</div>
+
+                    {/* Volume */}
+                    <div className={`col-span-3 sm:col-span-1 p-4 rounded-xl border shadow-sm ${darkMode ? 'bg-slate-800/40 border-slate-700' : 'bg-white border-gray-200'}`}>
+                      <div className={`text-xs uppercase tracking-wide ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Volume</div>
                       <div className="font-bold text-xl">{formatVolume(marketStats.volume)}</div>
                     </div>
                   </div>
@@ -1015,7 +1021,7 @@ const TradingDashboard = () => {
                       </div>
                     </div>
                     
-                    <div className="h-96 relative">
+                    <div className="h-[440px] relative">
                       {streamingStatus === 'stalled' && (
                         <div className="absolute z-10 top-2 left-2 right-2 bg-yellow-500/10 border border-yellow-500/40 text-yellow-600 px-3 py-2 rounded-lg text-sm">
                           No live ticks received. Market may be closed. Resumes next business day at 9:15 AM IST.
@@ -1086,22 +1092,22 @@ const TradingDashboard = () => {
                       <Target size={20} />
                       Market Statistics
                     </h3>
-                    <div className="space-y-4">
-                      <div className="flex justify-between">
-                        <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>Day Range</span>
-                        <span className="font-medium">{formatPrice(marketStats.low)} - {formatPrice(marketStats.high)}</span>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                      <div className="p-3 rounded-lg border border-white/10">
+                        <div className={`${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Day Range</div>
+                        <div className="font-medium">{formatPrice(marketStats.low)} – {formatPrice(marketStats.high)}</div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>52W High</span>
-                        <span className="font-medium text-green-500">{formatPrice(marketStats.high * 1.2)}</span>
+                      <div className="p-3 rounded-lg border border-white/10">
+                        <div className={`${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Open</div>
+                        <div className="font-medium">{formatPrice(marketStats.open)}</div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>52W Low</span>
-                        <span className="font-medium text-red-500">{formatPrice(marketStats.low * 0.8)}</span>
+                      <div className="p-3 rounded-lg border border-white/10">
+                        <div className={`${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Total Volume</div>
+                        <div className="font-medium">{formatVolume(marketStats.volume)}</div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className={darkMode ? 'text-gray-400' : 'text-gray-600'}>Avg Volume</span>
-                        <span className="font-medium">{formatVolume(marketStats.volume / (historicalData.length || 1))}</span>
+                      <div className="p-3 rounded-lg border border-white/10">
+                        <div className={`${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Avg Vol/Candle</div>
+                        <div className="font-medium">{formatVolume(marketStats.volume / (historicalData.length || 1))}</div>
                       </div>
                     </div>
                   </div>
