@@ -11,7 +11,7 @@ import {
   ChevronDown, Volume2, VolumeX, Brain, Filter, Sparkles 
 } from 'lucide-react';
 
-const BACKEND_URL = process.env.BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Enhanced TradingChart component for professional OHLC display
 const TradingChart = ({ historicalData, realTimeData, isStreaming, darkMode }) => {
