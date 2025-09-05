@@ -13,6 +13,8 @@ import {
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
+console.log(BACKEND_URL);
+
 // Enhanced TradingChart component for professional OHLC display
 const TradingChart = ({ historicalData, realTimeData, isStreaming, darkMode }) => {
   const formatVolume = (volume) => {
